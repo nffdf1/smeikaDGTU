@@ -1,3 +1,6 @@
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
 // Получаем текущие данные из куки, если они там есть
 let cookieData = document.cookie.split(';').find(cookie => cookie.trim().startsWith('gameRecords='));
 let gameRecords = cookieData ? JSON.parse(cookieData.split('=')[1]) : {};
@@ -7,7 +10,7 @@ function displayRecords() {
   let sortedRecords = Object.entries(gameRecords).sort((a, b) => b[1] - a[1]).slice(0, 10);
 
   let table = document.createElement('table');
-	table.style.cssText = 'position: absolute; top: 10px; left: 10px;'
+  table.style.cssText = 'position: absolute; top: 10px; left: 10px;'
   let header = table.insertRow();
   header.insertCell().textContent = 'Имя';
   header.insertCell().textContent = 'Рекорд';
@@ -30,9 +33,6 @@ function saveRecords() {
 	document.cookie = `gameRecords=${JSON.stringify(gameRecords)}; expires=${expires.toUTCString()}`;
 }
 
-
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
 
 const ground = new Image();
 ground.src = "1562688808.jpg";
@@ -80,6 +80,13 @@ function eatTail(head, arr) {
 	for(let i = 0; i < arr.length; i++) {
 		if(head.x == arr[i].x && head.y == arr[i].y){
 			clearInterval(game);
+
+			var userName = prompt("Как вас зовут?");
+
+			gameRecords[userName] = score;
+			saveRecords();
+			displayRecords();
+
             ctx.drawImage(newgameimg,3*box, 8*box);
             document.addEventListener('click', function() {
                 location.reload();
