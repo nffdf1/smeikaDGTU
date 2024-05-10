@@ -7,6 +7,7 @@ function displayRecords() {
   let sortedRecords = Object.entries(gameRecords).sort((a, b) => b[1] - a[1]).slice(0, 10);
 
   let table = document.createElement('table');
+	table.style.cssText = 'position: absolute; top: 10px; left: 10px;'
   let header = table.insertRow();
   header.insertCell().textContent = 'Имя';
   header.insertCell().textContent = 'Рекорд';
